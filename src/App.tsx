@@ -45,19 +45,22 @@ class App extends Component<any, any> {
     let listElements = this.state.hobbies.map(
       (hobby: number, index: number) => {
         let listStyle = {
-          backgroundColor: index % 2 !== 0 ? "#dddddd" : "#bbbbbb"
+          backgroundColor: index % 2 == 0 ? "#dedede" : "#cdcdcd"
         };
         return (<li 
                 key={index}
                 onClick = { () => {this.removeHobby(hobby)} }
                 style = {listStyle}
                 >
+                {index}
+                <span>
                 {hobby}
+                </span>
                 </li>)
       }
     );
 
-    let hobbyUpdate = <p style = {{backgroundColor:"#dddddd"}}>Add some hobbies!</p>;
+    let hobbyUpdate = <p>Add some hobbies!</p>;
     if (this.state.hobbyAdded) { 
       hobbyUpdate = <p style = {{color:"green"}}>Hobby Added!</p>;
     } else if (this.state.hobbyRemoved) { 
