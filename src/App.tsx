@@ -47,15 +47,18 @@ class App extends Component<any, any> {
         let listStyle = {
           backgroundColor: index % 2 == 0 ? "#dedede" : "#cdcdcd"
         };
+        let newIndex = index + 1;
+        let liNumber = index < 9 ? '0'+newIndex.toString() : newIndex.toString();
         return (<li 
                 key={index}
-                onClick = { () => {this.removeHobby(hobby)} }
-                style = {listStyle}
-                >
-                {index}
-                <span>
+                > 
+                <span className = "liIndex">
+                {liNumber}
+                </span>
+                <span className = "liContent" style = {listStyle}>
                 {hobby}
                 </span>
+                <span className = "liInfo" onClick = { () => {this.removeHobby(hobby)} }>delete</span>
                 </li>)
       }
     );
@@ -79,7 +82,7 @@ class App extends Component<any, any> {
         value = {this.state.hobbyInput}
         onChange = {this.changeInput.bind(this)}>
         </input>
-        <button onClick = {this.addHobby.bind(this)}>Add Hobby</button>
+        <button id = "addHobby" onClick = {this.addHobby.bind(this)}>Add Hobby</button>
         <ul>
           {listElements}
         </ul>
