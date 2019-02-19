@@ -2,11 +2,14 @@ body {
   background-color: rgb(206, 222, 255);
 }
 
+.container-fluid {
+  padding: 0;
+}
+
 #root {
-  width: 50%;
+  width: 100%;
   position: relative;
-  left: 25%;
-  padding-left: 10%;
+  left: 10%;
 }
 
 #root #addHobby:hover {
@@ -16,6 +19,7 @@ body {
 
 #root ul {
   padding-left: 0px;
+  margin-top: 15px;
 }
 
 #root li {
@@ -30,13 +34,11 @@ body {
 }
 
 #root li .liContent {
-  padding-bottom: 10px;
   border: 1px solid black;
   border-bottom: none;
   padding: 10px;
-  min-width: 140px;
-  width: 80%;
-  max-width: 300px;
+  min-width: 277px;
+  width: 277px;
 }
 
 #root li:last-of-type .liContent {
@@ -46,4 +48,9 @@ body {
 #root li .liInfo:hover {
   color: red;
   cursor: pointer;
+}
+
+#root .liInfo, #root .liIndex {
+  position: relative;
+  top: 9px;
 }
