@@ -1,22 +1,34 @@
-import React, { Component } from 'react';
+import React, { Component, ReactNode, JSXElementConstructor, ChangeEvent } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-class App extends Component<any, any> {
-  constructor(props: any) {
+interface Props {
+
+}
+
+interface State {
+  hobbies : string[],
+  hobbyInput : "",
+  hobbyRemoved : boolean,
+  hobbyAdded : boolean,
+  inputLength: number,
+  inputApproved: boolean
+}
+
+class App extends Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = {
       hobbies : [],
       hobbyInput : "",
       hobbyRemoved : false,
       hobbyAdded : false,
-      inputLength: "number",
+      inputLength: 0,
       inputApproved: true
     };
   }
   
-
-  changeInput(event: any) {
+  changeInput(event: any): void {
     const input = event.target.value;
     const length = input.length;
     this.setState({
@@ -25,13 +37,13 @@ class App extends Component<any, any> {
     })
   }
 
-  handleKeyPress = (event: any) => {
+  handleKeyPress = (event: any): void => {
     if(event.key == 'Enter') {
       this.checkLength();
     }
   }
 
-  checkLength() {
+  checkLength():void {
     if (this.state.inputLength <= 20) {
       this.addHobby();
       this.setState({
@@ -44,7 +56,7 @@ class App extends Component<any, any> {
     }
   }
 
-  addHobby() {
+  addHobby():void {
     const oldHobbies = this.state.hobbies;
     this.setState({
       hobbies : oldHobbies.concat(this.state.hobbyInput),
@@ -53,21 +65,21 @@ class App extends Component<any, any> {
     })
   }
 
-  removeHobby(hobby: number) {
+  removeHobby(hobby: any): void {
     const oldHobbies = this.state.hobbies;
     const position = oldHobbies.indexOf(hobby);
     this.setState({
       hobbies : oldHobbies.filter(
-        (el: number, index: number) => { return index !== position}
+        (el: string, index: number): boolean => { return index !== position}
       ),
       hobbyRemoved : true, 
       hobbyAdded : false
     });
   }
 
-  render() {
+  render(): ReactNode {
     let listElements = this.state.hobbies.map(
-      (hobby: number, index: number) => {
+      (hobby: string, index: number): ReactNode => {
         let listStyle = {
           backgroundColor: index % 2 == 0 ? "#dedede" : "#cdcdcd"
         };
