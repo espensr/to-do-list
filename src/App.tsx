@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Key } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
@@ -9,15 +9,39 @@ class App extends Component<any, any> {
       hobbies : [],
       hobbyInput : "",
       hobbyRemoved : false,
-      hobbyAdded : false
+      hobbyAdded : false,
+      inputLength: "number",
+      inputApproved: true
     };
   }
   
 
   changeInput(event: any) {
+    const input = event.target.value;
+    const length = input.length;
     this.setState({
-      hobbyInput : event.target.value
+      hobbyInput : input,
+      inputLength: length
     })
+  }
+
+  handleKeyPress = (event: any) => {
+    if(event.key == 'Enter') {
+      this.checkLength();
+    }
+  }
+
+  checkLength() {
+    if (this.state.inputLength <= 20) {
+      this.addHobby();
+      this.setState({
+        inputApproved: true
+      })
+    } else {
+      this.setState({
+        inputApproved: false
+      })  
+    }
   }
 
   addHobby() {
@@ -64,7 +88,9 @@ class App extends Component<any, any> {
     );
 
     let hobbyUpdate = <p>Add some hobbies!</p>;
-    if (this.state.hobbyAdded) { 
+    if (!this.state.inputApproved) {
+      hobbyUpdate = <p style = {{color:"red"}}>Hobby is too long!</p>;
+    } else if (this.state.hobbyAdded) { 
       hobbyUpdate = <p style = {{color:"green"}}>Hobby Added!</p>;
     } else if (this.state.hobbyRemoved) { 
       hobbyUpdate = <p style = {{color:"red"}}>Hobby Deleted!</p>;
@@ -80,9 +106,10 @@ class App extends Component<any, any> {
         <input 
         type="text"
         value = {this.state.hobbyInput}
-        onChange = {this.changeInput.bind(this)}>
+        onChange = {this.changeInput.bind(this)}
+        onKeyPress={this.handleKeyPress.bind(this)}>
         </input>
-        <button id = "addHobby" onClick = {this.addHobby.bind(this)}>Add Hobby</button>
+        <button id = "addHobby" onClick = {this.checkLength.bind(this)}>Add Hobby</button>
         <ul>
           {listElements}
         </ul>
